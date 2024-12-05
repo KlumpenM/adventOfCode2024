@@ -18,21 +18,51 @@ So, a report only counts as safe if both of the following are true:
 - The levels are either all increasing or all decreasing.
 - Any two adjacent levels differ by at least one and at most three.          
 """
-unsafe = 0
 safe = 0
+ascending = True
 
 with open("day2/inputRuben.txt", "r") as f:
     data = f.read().splitlines()
-    print(len(data))
-
     # Iterating through the data
     for line in data:
         # Splitting the line into a list of integers
         levels = list(map(int, line.split()))
-        for i in range(len(levels)-1):
-            # If the difference between two adjacent levels is greater than 3
-            if abs(levels[i] - levels[i+1]) > 3:
-                unsafe += 1
+        # Enumerating each integer in the list
+        for (i, _) in enumerate(levels):
+            # If the integer is the last one in the list, break the loop
+            if i == len(levels) - 1:
+                safe += 1
                 break
+            # If the integer is the same as the next
+            if levels[i] == levels[i + 1]:
+                break
+            # If the integer is smaller than the next
+            if levels[i] < levels[i + 1]:
+                if i == 0: 
+                    ascending = True
+                # If the difference between the integer and the next is greater than 3, break the loop
+                if levels[i + 1] - levels[i] > 3 or not ascending:
+                    break
+                else:
+                    continue
+            
+            # If the integer is greater than the next
+            if levels[i] > levels[i + 1]:
+                if i == 0:
+                    ascending = False
+                # If the difference between the integer and the next is greater than 3, break the loop
+                if levels[i] - levels[i + 1] > 3 or ascending:
+                    break
+                else:
+                    continue
+print(safe)
 
-print(1000 - unsafe)
+
+########################
+###### PART 2 ##########
+########################
+
+"""
+Now we are allowed to remove 1 and only 1 level from the list.
+So we are making a list safe
+"""
