@@ -84,38 +84,39 @@ with open("day2/inputRuben.txt", "r") as f:
             if i == len(levels) - 1:
                 safe += 1
                 break
-            # If the integer is the same as the next
+                
+            # If the integer is the same as the next, check two ahead
             if levels[i] == levels[i + 1]:
-                if levels[i] == levels[i + 1]:
+                if i + 2 < len(levels):
+                    if levels[i] - levels[i + 2] > 3 or levels[i + 2] - levels[i] > 3:
+                        break
+                else:
+                    safe += 1
                     break
-                amount_of_rules_removed += 1
-                continue
-
+            
             # If the integer is smaller than the next
             if levels[i] < levels[i + 1]:
                 if i == 0: 
                     ascending = True
-                if i == len(levels) - 3:
-                    if levels[i + 1] - levels[i] > 3 and levels[i + 2] - levels[i] > 3:
-                        break
                 # If the difference between the integer and the next is greater than 3, break the loop
                 if levels[i + 1] - levels[i] > 3 or not ascending:
                     amount_of_rules_removed += 1
+                    if amount_of_rules_removed > 1:
+                        break
                     continue
                 else:
                     continue
-            
+
             # If the integer is greater than the next
             if levels[i] > levels[i + 1]:
                 if i == 0:
                     ascending = False
-                if i == len(levels) - 3:
-                    if levels[i] - levels[i + 1] > 3 and levels[i] - levels[i + 2] > 3:
-                        break
                 # If the difference between the integer and the next is greater than 3, break the loop
                 if levels[i] - levels[i + 1] > 3 or ascending:
                     amount_of_rules_removed += 1
-                    break
+                    if amount_of_rules_removed > 1:
+                        break
+                    continue
                 else:
                     continue
 print(safe)
