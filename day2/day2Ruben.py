@@ -70,7 +70,7 @@ safe = 0
 ascending = True
 amount_of_rules_removed = 0
 
-# Found out that it's between 479 and 557
+# Found out that it's between 479 and 493
 
 with open("day2/inputRuben.txt", "r") as f:
     data = f.read().splitlines()
